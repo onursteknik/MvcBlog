@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MvcBlog.Models.Yorum>
+@{
+    Layout = null;
+}
+
+
+
+<div class="panel-heading" style="text-align:center;height:40px;">
+    <h4 style="margin:0">Son Yorumlar</h4>
+</div>
+<div class="panel-body">
+
+    <div class="panel-group" >
+        @foreach (var item in Model)
+            {
+            <div class="media">
+                <div class="media-body">
+                    <div style="background-color:#f0f1ec;">
+                        <h4 class="media-heading" style="font-size:14px;font-weight:200;color:darkblue">
+                            @if (Convert.ToInt32(Session["uyeid"]) == item.UyeID)
+                            {
+                            <img src="@item.Uye.Foto" width="20" height="20" alt="@item.Uye.KullaniciAdi" /> <a href="/Uye/Index/@item.UyeID">@item.Uye.KullaniciAdi</a>
+                            }
+                            else
+                            {
+                            <img src="@item.Uye.Foto" width="20" height="20" alt="@item.Uye.KullaniciAdi" /> <a href="/Uye/UyeProfil/@item.UyeID">@item.Uye.KullaniciAdi</a>
+                            }
+
+                        </h4>
+                    </div>
+                    <h4><span style="font-size:13px;font-weight:bold;font-style:oblique"><a style="color:black" href="/Home/MakaleDetay/@item.MakaleID">@item.Makale.Baslik</a></span></h4>
+                    @if (item.Icerik.Length >= 120)
+                    {
+                    <span style="font-size:12px">@item.Icerik.Substring(0, 120)...<a style="font-size:12px" href="/Home/MakaleDetay/@item.MakaleID">Devamını Gör</a></span>
+                    }
+                    else
+                    {
+                    <span style="font-size:12px">@item.Icerik</span>
+                    }
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

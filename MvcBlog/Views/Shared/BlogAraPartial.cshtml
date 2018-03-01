@@ -1,0 +1,14 @@
+﻿@using (Html.BeginForm("BlogAra", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="panel-heading" style="background-color:#f5f5f5"><h4 style="text-align:center">Makale Arama</h4></div>
+    <div class="panel-body">
+        <div class="input-group">
+            <input id="Ara" name="Ara" type="text" class="form-control">
+            <span class="input-group-btn">
+                <button class="btn btn-default" value="Ara" type="submit">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+}

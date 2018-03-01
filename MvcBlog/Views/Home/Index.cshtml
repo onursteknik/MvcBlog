@@ -1,0 +1,62 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<MvcBlog.Models.Makale>
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-8">
+    @foreach (var item in Model)
+    {
+    <article class="col-sm-12">
+        <h2>
+            <a href="/Home/MakaleDetay/@item.MakaleID">@item.Baslik</a>
+        </h2>
+        <p>
+            <img class="img-circle img-responsive" width="40" height="40" src="@item.Uye.Foto" alt="@item.Uye.AdSoyad" />
+            @if (Convert.ToInt32(Session["uyeid"]) == item.UyeID)
+            {
+            <span style="font-size:13px">Yazar : </span>
+            <a style="font-size:13px" href="/Uye/Index/@item.Uye.UyeID">@item.Uye.KullaniciAdi</a>
+            }
+            else
+            {
+            <span style="font-size:13px">Yazar : </span>
+            <a style="font-size:13px" href="/Uye/UyeProfil/@item.Uye.UyeID">@item.Uye.KullaniciAdi</a>
+            }
+        </p>
+        <p>
+            <span class="glyphicon glyphicon-time"></span>@String.Format("{0: dd MMMM yyyy}", item.Tarih)&nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-tags"></span>&nbsp;@item.Etikets.Count()
+        </p>
+        <p>
+
+        </p>
+        <hr>
+        <img class="img-responsive" src="@item.Foto" alt="@item.Baslik" />
+        <hr>
+
+        @if (item.Icerik.Length > 350)
+        {
+        <p>@Html.Raw(item.Icerik.Substring(0, 350))...</p>
+        }
+        else
+        {
+        <p>@Html.Raw(item.Icerik)...</p>
+        }
+
+        <a class="btn btn-primary" href="/Home/MakaleDetay/@item.MakaleID">Devamını Gör<span class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+    </article>
+    }
+    <div class="row"> 
+        <div class="col-md-8 text-center">
+            <div class="pagedList pagination-lg" >
+                @Html.PagedListPager(Model,Page=>Url.Action("Index",new {Page }),PagedListRenderOptions.Classic)
+            </div>
+        </div>
+
+    </div>
+</div>
